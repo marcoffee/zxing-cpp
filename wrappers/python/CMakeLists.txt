@@ -3,6 +3,7 @@ project(ZXingPython)
 
 set (pybind11_git_repo https://github.com/pybind/pybind11.git)
 set (pybind11_git_rev v2.10.4)
+set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # check if we are called from the top-level ZXing project
 get_directory_property(hasParent PARENT_DIRECTORY)
