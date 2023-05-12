@@ -54,7 +54,7 @@ DetectorResult SampleGrid(const BitMatrix& image, int width, int height, const R
 #ifdef PRINT_DEBUG
 				log(p, 3);
 #endif
-				if (image.get(p))
+				if (p.x >= 0 && p.x < image.width() && p.y >= 0 && p.y <= image.height() && image.get(p))
 					res.set(x, y);
 			}
 	}
