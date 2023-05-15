@@ -33,28 +33,19 @@ DetectorResult SampleGrid(const BitMatrix& image, int width, int height, const R
 	if (width <= 0 || height <= 0)
 		return {};
 
-	for (auto&& [x0, x1, y0, y1, mod2Pix] : rois) {
-		// To deal with remaining examples (see #251 and #267) of "numercial instabilities" that have not been
-		// prevented with the Quadrilateral.h:IsConvex() check, we check for all boundary points of the grid to
-		// be inside.
-		auto isInside = [&mod2Pix = mod2Pix, &image](PointI p) { return image.isIn(mod2Pix(centered(p))); };
-		for (int y = y0; y < y1; ++y)
-			if (!isInside({x0, y}) || !isInside({x1 - 1, y}))
-				return {};
-		for (int x = x0; x < x1; ++x)
-			if (!isInside({x, y0}) || !isInside({x, y1 - 1}))
-				return {};
-	}
-
 	BitMatrix res(width, height);
 	for (auto&& [x0, x1, y0, y1, mod2Pix] : rois) {
 		for (int y = y0; y < y1; ++y)
 			for (int x = x0; x < x1; ++x) {
 				auto p = mod2Pix(centered(PointI{x, y}));
+
+				if (!image.isIn(p))
+					return {};
+
 #ifdef PRINT_DEBUG
 				log(p, 3);
 #endif
-				if (p.x >= 0 && p.x < image.width() && p.y >= 0 && p.y <= image.height() && image.get(p))
+				if (image.get(p))
 					res.set(x, y);
 			}
 	}
