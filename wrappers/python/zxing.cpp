@@ -322,6 +322,9 @@ PYBIND11_MODULE(zxingcpp, m)
 		.def_property_readonly("valid", &Barcode::isValid,
 			":return: whether or not barcode is valid (i.e. a symbol was found and decoded)\n"
 			":rtype: bool")
+		.def_property_readonly("encoding_is_guessed", &Barcode::encodingIsGuessed,
+			":return: whether or not text encoding is guessed\n"
+			":rtype: bool")
 		.def_property_readonly("text", [](const Barcode& res) { return res.text(); },
 			":return: text of the decoded symbol (see also TextMode parameter)\n"
 			":rtype: str")
