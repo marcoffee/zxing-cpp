@@ -6,6 +6,7 @@
 
 #include "Barcode.h"
 
+#include "ECI.h"
 #include "DecoderResult.h"
 #include "DetectorResult.h"
 #include "ZXAlgorithms.h"
@@ -114,6 +115,13 @@ int Result::orientation() const
 std::string Result::symbologyIdentifier() const
 {
 	return _content.symbology.toString();
+}
+
+bool Result::encodingIsGuessed() const
+{
+	return _content.encodings.empty() ||
+		std::any_of(_content.encodings.begin(), _content.encodings.end(),
+					 [&](const Content::Encoding& enc) { return enc.eci == ECI::Unknown; });
 }
 
 int Result::sequenceSize() const
