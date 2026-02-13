@@ -123,6 +123,10 @@ public:
 	/// Returns the symbology identifier "]cm" where "c" is symbology code character, "m" the modifier.
 	std::string symbologyIdentifier() const;
 
+
+	/// @brief encodingIsGuessed Set if Result text encoding was guessed.
+	bool encodingIsGuessed() const;
+
 	/// @brief Returns the number of symbols in a structured append sequence.
 	///
 	/// If this is not part of a structured append sequence, the returned value is -1.

@@ -87,6 +87,15 @@ int Barcode::orientation() const
 	return narrow_cast<int>(std::lround(d->position.orientation() * 180 / std::numbers::pi));
 }
 
+bool Barcode::encodingIsGuessed() const
+{
+	return d->content.encodings.empty() || std::any_of(
+		d->content.encodings.begin(), d->content.encodings.end(), [&] (const Content::Encoding& enc) {
+			return enc.eci == ECI::Unknown;
+		}
+	);
+}
+
 bool Barcode::isMirrored() const
 {
 	return d->isMirrored;
